@@ -1,24 +1,9 @@
-# README
+# Redkat
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails.Eks.Kubernetes.Aws.Terraform.Stack
 
-Things you may want to cover:
+![architecture](https://github.com/Sauce-Code-42/redkat_stack/blob/main/RedKat.png?raw=true)
 
-* Ruby version
+## Contributors
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Sylvance Kerandi Mbaka.
