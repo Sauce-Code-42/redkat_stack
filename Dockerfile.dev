@@ -1,0 +1,38 @@
+ARG RUBY_VERSION=3.0.4
+
+FROM ruby:$RUBY_VERSION
+
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev \
+yarn nodejs
+
+ARG runner
+ARG SSH_PRIVATE_KEY
+
+RUN echo "Hello there, ${runner}."
+RUN mkdir /root/.ssh/
+RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+RUN chmod 400 /root/.ssh/id_rsa
+RUN touch /root/.ssh/known_hosts
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+
+WORKDIR /usr/src/app
+
+RUN mkdir -p tmp/pids #allow sidekiq to write pid to file
+
+COPY Gemfile Gemfile.lock ./
+
+COPY vendor /usr/src/app/vendor
+
+RUN gem install bundler
+
+RUN bundle config set --local deployment 'true'
+
+RUN bundle install
+
+COPY . ./
+
+EXPOSE 3000
+
+ENTRYPOINT ["./bin/entrypoint.sh"]
+
+CMD ["server"]
